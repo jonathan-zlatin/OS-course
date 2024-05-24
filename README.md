@@ -1,6 +1,7 @@
 # Operating Systems Course Projects - Hebrew University
 
-Welcome to the repository for the Operating Systems course at the Hebrew University. This repository contains a collection of projects and assignments developed in C++ as part of the course curriculum.
+Welcome to the repository for the Operating Systems course at the Hebrew University.
+This repository contains a collection of projects and assignments developed in C++ as part of the course curriculum.
 
 ## Table of Contents
 - [About the Course](#about-the-course)
