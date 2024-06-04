@@ -1,0 +1,8 @@
+# ninja log v5
+6	82	1717504596458778000	build.ninja	a43b892a8d464944
+91	414	1717499822948192000	CMakeFiles/ex2_resources.dir/Thread.cpp.o	ed26b61d780b2430
+89	417	1717499822949141000	CMakeFiles/ex2_resources.dir/demo_jmp.c.o	7ddb462c4d63b8e6
+1	45	1717502352867080000	ex2_resources	df085f27e79ff3ff
+1	59	1717500141787173000	CMakeFiles/ex2_resources.dir/demo_itimer.c.o	9dbdedc498976d37
+415	833	1717499823345095000	CMakeFiles/ex2_resources.dir/uthreads.cpp.o	12e9cb7b78f7e2ea
+90	418	1717499822949138000	CMakeFiles/ex2_resources.dir/demo_singInt_handler.c.o	eae542aaaa8cb6ef
