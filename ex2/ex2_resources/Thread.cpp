@@ -3,12 +3,8 @@
 //
 
 #include "Thread.h"
-#include <stdio.h>
 #include <setjmp.h>
 #include <signal.h>
-#include <unistd.h>
-#include <sys/time.h>
-#include <stdbool.h>
 
 // Code from demo_jmp.c
 #ifdef __x86_64__
@@ -31,24 +27,24 @@ address_t translate_address(address_t addr)
 }
 
 #else
-/* code for 32 bit Intel arch */
-
-typedef unsigned int address_t;
-#define JB_SP 4
-#define JB_PC 5
-
-
-/* A translation is required when using an address of a variable.
-   Use this as a black box in your code. */
-address_t translate_address(address_t addr)
-{
-    address_t ret;
-    asm volatile("xor    %%gs:0x18,%0\n"
-                 "rol    $0x9,%0\n"
-            : "=g" (ret)
-            : "0" (addr));
-    return ret;
-}
+///* code for 32 bit Intel arch */
+//
+//typedef unsigned int address_t;
+//#define JB_SP 4
+//#define JB_PC 5
+//
+//
+///* A translation is required when using an address of a variable.
+//   Use this as a black box in your code. */
+//address_t translate_address(address_t addr)
+//{
+//    address_t ret;
+//    asm volatile("xor    %%gs:0x18,%0\n"
+//                 "rol    $0x9,%0\n"
+//            : "=g" (ret)
+//            : "0" (addr));
+//    return ret;
+//}
 
 
 #endif
@@ -58,13 +54,13 @@ Thread::Thread()
 {
     thread_id = 0;
     state = State::READY;
-    quantums_to_run = 0;
+    total_run_time = 0;
     quantums_to_sleep = 0;
     sigemptyset(&env->__saved_mask); // taken from demo_jmp.c
 }
 
 Thread::Thread(int thread_id, thread_entry_point entry_point_func)  : thread_id(thread_id), state(State::READY),
-        entry_point_func(entry_point_func),quantums_to_run(0),quantums_to_sleep(0){
+                                                                      entry_point_func(entry_point_func), total_run_time(0), quantums_to_sleep(0){
     // ===========          CODE FROM demo_jmp.c  =============
 
     address_t sp = (address_t) stack + STACK_SIZE - sizeof(address_t);

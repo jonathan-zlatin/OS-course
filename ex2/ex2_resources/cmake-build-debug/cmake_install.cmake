@@ -1,4 +1,4 @@
-# Install script for directory: /cs/usr/pajaro770/Desktop/ex2_resources
+# Install script for directory: /cs/usr/pajaro770/CLionProjects/OS-course/ex2/ex2_resources
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/cs/usr/pajaro770/Desktop/ex2_resources/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/cs/usr/pajaro770/CLionProjects/OS-course/ex2/ex2_resources/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

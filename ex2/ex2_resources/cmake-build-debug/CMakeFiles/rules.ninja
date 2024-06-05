@@ -22,21 +22,11 @@ rule C_COMPILER__ex2_resources_unscanned_Debug
 
 
 #############################################
-# Rule for compiling CXX files.
+# Rule for linking C executable.
 
-rule CXX_COMPILER__ex2_resources_unscanned_Debug
-  depfile = $DEP_FILE
-  deps = gcc
-  command = /usr/bin/c++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
-  description = Building CXX object $out
-
-
-#############################################
-# Rule for linking CXX executable.
-
-rule CXX_EXECUTABLE_LINKER__ex2_resources_Debug
-  command = $PRE_LINK && /usr/bin/c++ $FLAGS $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
-  description = Linking CXX executable $TARGET_FILE
+rule C_EXECUTABLE_LINKER__ex2_resources_Debug
+  command = $PRE_LINK && /usr/bin/cc $FLAGS $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
+  description = Linking C executable $TARGET_FILE
   restat = $RESTAT
 
 
@@ -52,7 +42,7 @@ rule CUSTOM_COMMAND
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = /usr/local/APP/jetbrains/clion/2023.2/bin/cmake/linux/x64/bin/cmake --regenerate-during-build -S/cs/usr/pajaro770/Desktop/ex2_resources -B/cs/usr/pajaro770/Desktop/ex2_resources/cmake-build-debug
+  command = /usr/local/APP/jetbrains/clion/2023.2/bin/cmake/linux/x64/bin/cmake --regenerate-during-build -S/cs/usr/pajaro770/CLionProjects/OS-course/ex2/ex2_resources -B/cs/usr/pajaro770/CLionProjects/OS-course/ex2/ex2_resources/cmake-build-debug
   description = Re-running CMake...
   generator = 1
 
