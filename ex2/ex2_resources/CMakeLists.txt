@@ -9,9 +9,10 @@ add_executable(ex2_resources
 #        demo_itimer.c)
 #        demo_jmp.c
 #        demo_singInt_handler.c
-#        Thread.cpp
+        Thread.cpp
         uthreads.cpp
         uthreads.h
-        test0_sanity.txt
-        test0_sanity.cpp
+#        test0_sanity.txt
+#        test0_sanity.cpp
+        tests/test1.in.cpp
 )

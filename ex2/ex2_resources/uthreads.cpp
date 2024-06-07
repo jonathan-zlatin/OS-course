@@ -37,6 +37,13 @@ void timer_handler(int sig){
     jump_to_next_thread(READY_JMP);
 }
 
+//int timer_handler(){
+//    sigsetjmp(threads[current_thread_id]->env, 1);
+//    ready_threads.push_back(threads[current_thread_id]);
+//    jump_to_next_thread(READY_JMP);
+//    return 0;
+//}
+
 int initiate_timer(int quantum_usecs){
 
     if(sigemptyset(&ms) == -1){
@@ -55,7 +62,7 @@ int initiate_timer(int quantum_usecs){
     // Start a virtual timer. It counts down whenever this process is executing.
     if (setitimer(ITIMER_VIRTUAL, &timer, NULL))
     {
-        printf("system error: timer failed to start\n.");
+//        printf("system error: timer failed to start\n.");
     }
     return EXIT_SUCCESS;
 }
@@ -83,16 +90,16 @@ void unblock_mask_sig(){
 
 //Reached here because quantum expired
 //We move running thread to ready and first ready to running
-int timer_handler(){
-    sigsetjmp(threads[current_thread_id]->env, 1);
-    ready_threads.push_back(threads[current_thread_id]);
-    jump_to_next_thread(READY_JMP);
-    return 0;
-}
+//int timer_handler(){
+//    sigsetjmp(threads[current_thread_id]->env, 1);
+//    ready_threads.push_back(threads[current_thread_id]);
+//    jump_to_next_thread(READY_JMP);
+//    return 0;
+//}
 
 int handle_valid_thread_id(int tid){
     if(tid < 0 || tid >= MAX_THREAD_NUM){
-        printf("thread library error: out of bounds thread id \n",stderr);
+        printf("thread library error: out of bounds thread id [0-99 only]\n",stderr);
         return -1;
     }
     if(threads[tid] == nullptr){
@@ -104,6 +111,12 @@ int handle_valid_thread_id(int tid){
 
 void delete_single_thread(int tid){
     block_mask_sig();
+
+    // todo : added this if
+//    if (threads[tid]->state == RUNNING){
+//        delete threads[tid]
+//    }
+
 
     ready_threads.remove(threads[tid]);
     blocked_threads.remove(threads[tid]);
@@ -167,7 +180,15 @@ void jump_to_next_thread(int state) {
             ret_val = sigsetjmp(threads[current_thread_id]->env,1);
             break;
         case TERMINATED_JMP:
-//            uthread_terminate(current_thread_id);
+            if (threads[current_thread_id] == nullptr){
+                break;
+            }
+            if (threads[current_thread_id]->state == RUNNING){
+                return;
+//                ready_threads.push_front(threads[current_thread_id]);
+//                threads[current_thread_id]->state = READY;
+            }
+
             break;
         case RUNNING_JMP:
             ready_threads.push_back(threads[0]);
@@ -184,10 +205,10 @@ void jump_to_next_thread(int state) {
     //choose new thread
     if(ret_val == 0){
         total_quantums++;
-        //while (ready_threads.front() == nullptr);
         Thread* next_thread = ready_threads.front();
         if(next_thread == nullptr){
             printf("thread library error: tried to run next thread but ready threads are empty");
+
         }
 
         ready_threads.remove(next_thread);
@@ -349,6 +370,7 @@ int uthread_resume(int tid){
     //we reach here if the state was actually blocked
     block_mask_sig();
 
+    threads[tid]->state = State::READY; // todo - new change
     blocked_threads.remove(threads[tid]);
     ready_threads.push_back(threads[tid]);
 
