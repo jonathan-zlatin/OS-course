@@ -17,7 +17,7 @@ The following is a list of projects and assignments included in this repository:
 1. **Project 1: P**
     - more later...
 
-2. **Project 2: P**
+2. **Project 2: Implementation of Round Robin (RR) algorithm P**
     - more later...
 
 3. **Project 3: P**
